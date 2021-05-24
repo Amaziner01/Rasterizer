@@ -19,7 +19,7 @@ class Window
         [[nodiscard]] bool HaveResized();
 
     private:
-        static LRESULT wnd_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam);
+        static LRESULT WINAPI wnd_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam);
         HWND        m_win;
         HDC         m_dc;
         MSG         m_msg;

@@ -1,6 +1,6 @@
 #include "window.hh"
 
-LRESULT Window::wnd_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam)
+LRESULT WINAPI Window::wnd_proc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
     Window *pThis;
 
