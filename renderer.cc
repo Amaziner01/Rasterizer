@@ -59,6 +59,7 @@ void Renderer::Refresh()
 
     SetDIBits(nullptr, m_bmp, 0, h, m_buffer, &m_bi, DIB_RGB_COLORS);
     BitBlt(m_dc, 0, 0, w, h, m_memdc, 0, 0, SRCCOPY);
+
 }
 
 void Renderer::Clear(u32_t color)
@@ -155,3 +156,5 @@ void Renderer::DrawIndices(void *verts, void *inds, size_t triangle_count, u32_t
 }   
 
 [[nodiscard]] u32_t *Renderer::GetBufferPtr() { return m_buffer; }
+
+[[nodiscard]] HDC Renderer::GetDirectContext() { return m_dc; }

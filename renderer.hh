@@ -21,6 +21,7 @@ class Renderer
         void DrawArray(void *verts, size_t triangle_count, u32_t color);
         void DrawIndices(void *verts, void *inds, size_t triangle_count, u32_t color);
         [[nodiscard]] u32_t *GetBufferPtr();
+        [[nodiscard]] HDC GetDirectContext();
 
 
     private:

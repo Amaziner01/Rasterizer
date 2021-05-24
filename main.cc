@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <algorithm>
+#include <sstream>
 
 #include "window.hh"
 #include "renderer.hh"
@@ -98,26 +99,26 @@ int main() {
     #define MOVEMENT_SPEED 15
     #define PI 3.1416
 
-        if (keyPressed(0x41))
+        if (keyPressed('A'))
         {
             position.x += MOVEMENT_SPEED * sin(-anglex + (PI/2)) * dt;
             position.z -= MOVEMENT_SPEED * cos(-anglex + (PI/2)) * dt;
         }
 
-        if (keyPressed(0x44))
+        if (keyPressed('D'))
         {
             position.x += MOVEMENT_SPEED * sin(-anglex - (PI/2)) * dt;
             position.z -= MOVEMENT_SPEED * cos(-anglex - (PI/2)) * dt;
         }
 
-        if (keyPressed(0x53))
+        if (keyPressed('S'))
         {
             position.x += MOVEMENT_SPEED * sin(anglex) * dt;
             position.z += MOVEMENT_SPEED * cos(anglex) * cos(angley) * dt;
             position.y -= MOVEMENT_SPEED * sin(angley) * dt;
         }
 
-        if (keyPressed(0x57)) 
+        if (keyPressed('W')) 
         {
             position.x += MOVEMENT_SPEED * sin(-anglex) * dt;
             position.z -= MOVEMENT_SPEED * cos(-anglex) * cos(angley) * dt;
@@ -129,7 +130,7 @@ int main() {
 
 
         int j = 0;
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < MAX_CUBES; i++)
         {
             auto transform = [&](vec3 v) {
 
@@ -146,12 +147,13 @@ int main() {
                 return v;
             };
 
-            //angles[i] += 1 * dt;
+            angles[i] += 1 * dt;
 
             TransformVertices(vertices, transformedVertices, 8, transform);
+            renderer.DrawIndices(transformedVertices, indices, sizeof(indices) / 32 * 3, colors[i]);
+
             if (j < 10) 
             {
-                renderer.DrawIndices(transformedVertices, indices, sizeof(indices) / 32 * 3, colors[i]);
             }
 
             j++;
@@ -173,6 +175,11 @@ int main() {
         QueryPerformanceFrequency(&freq);
 
         dt = (double)(end.QuadPart - begin.QuadPart) / freq.QuadPart;
+
+        std::wstringstream ws;
+        ws << 1 / dt;
+        RECT rc = {0, 0, 100, 100};
+        DrawTextW(renderer.GetDirectContext(), ws.str().c_str(), ws.str().length(), &rc, DT_BOTTOM);
     }
 
     return 0;
